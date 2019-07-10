@@ -1,0 +1,24 @@
+	int HP=20;
+	int HPMax=20;
+	int Food=20;
+	int FoodMax=20;
+
+
+unsigned int Inventory[20][2];
+string InventoryNames[20];
+
+
+ /*		INVENTORY
+	Inventory[ Ubicacion ] [ 0 = Tipo de Objeto / 1 =  Cantidad del Objeto]
+	
+	Objetos_Tipo{
+		0: test_item0
+		1: test_comida0
+		2: test_herramienta0
+		3: test_curacion0
+		4: Vacio
+		5: Madera
+	}
+	
+	
+	*/

@@ -1,0 +1,335 @@
+void InicializarInventario(){
+	 for(int i=0;i<20;i++){
+		Inventory[i][0] = 4;
+		Inventory[i][1] = 0;
+     }
+}
+
+void DeclararInventario(){
+	for(int i=0;i<20;i++){
+		switch(Inventory[i][0]){
+			case 0:
+				InventoryNames[i] = "Test_Item0";
+				break;
+			case 1:
+				InventoryNames[i] = "Test_Comida0";
+				break;
+			case 2:
+				InventoryNames[i] = "Test_Herramienta0";
+				break;
+			case 3:
+				InventoryNames[i] = "Test_Curacion0";
+				break;
+			case 4:
+				InventoryNames[i] = "Vacio";
+				break;
+			case 5:
+				InventoryNames[i] = "Madera";
+				break;
+			case 6:
+				InventoryNames[i] = "Piedra";
+				break;
+			case 7:
+				InventoryNames[i] = "Hierro";
+				break;
+			default:
+				InventoryNames[i] = "ERROR_Delete_This_Freaking_Error_Madafucker";
+				getch();
+				
+				break;
+		}
+	}
+}
+
+void MostrarInventario(){
+	DeclararInventario();
+	system("cls");
+	int ubic=0;
+	while(ubic<10){
+		if(Inventory[ubic][0]==4){
+			cout<<ubic+1<<" "<<InventoryNames[ubic];
+		}else{
+			cout<<ubic+1<<" "<<InventoryNames[ubic]<<" x"<<Inventory[ubic][1];
+		}
+		if(Inventory[ubic+10][0]==4){
+			gotoxy(30,ubic);
+			cout<<ubic+10<<" "<<InventoryNames[ubic+10];
+		}else{
+			gotoxy(30,ubic);
+			cout<<ubic+10<<" "<<InventoryNames[ubic+10]<<" x"<<Inventory[ubic+10][1];
+		}
+		
+		ubic++;
+		cout<<'\n';
+		
+	}
+	getch();	
+}
+
+void Carga(int Carga,int Vel){
+	int LoaderIC=0;
+	int i=0;
+	gotoxy(7,6);
+	cout<<"[";
+	for(int i=0;i<Carga;i++){
+		/*********************************************
+		       Creando Pantalla de Carga Global
+		**********************************************/
+		cout<<" *";
+		
+	}
+	cout<<" ]";
+	i=1;
+	while(i<=(Carga*2)-1){
+			switch(i%2){
+				case 0:
+					gotoxy(8+i+1,6);
+					break;
+				case 1:
+					gotoxy(8+i,6);
+					break;
+				default:
+					gotoxy(8+i+1,6);
+			}
+			cout<<"#";
+			
+		gotoxy(7+Carga*2+5,6);
+		switch(LoaderIC%3){
+			case 0:
+				cout<<"/";
+				break;
+			case 1:
+				cout<<"-";
+				break;
+			case 2:
+				printf("%c",BARRA);
+				break;
+			default:
+				cout<<"= )";
+		}
+		i++;
+		LoaderIC++;
+		Sleep(Vel/2);
+	}
+}
+
+void Talar(){
+	system("cls");
+	srand(time(0));
+	int Talado = 3 + (rand() % 6);
+	gotoxy(7,4);
+	cout<<"Talando Un Arbol...";
+	Carga(7,500);
+	gotoxy(7,4);
+	cout<<"Talaste Un Arbol";
+	gotoxy(7,5);
+	cout<<"                                                                                   ";
+	gotoxy(7,6);
+	cout<<"                                                                                   ";
+	gotoxy(7,5);
+	cout<<"Obtienes "<<Talado<<" De Madera";
+	for(int i=0;i<=20;i++){
+		if(Inventory[i][0]==5){
+			Inventory[i][0]=5;
+			Inventory[i][1]+=Talado;
+			break;
+		}
+		if(Inventory[i][0]==4){
+			Inventory[i][0]=5;
+			Inventory[i][1]+=Talado;
+			break;
+		}
+	}
+	getch();
+}
+
+void Minar(){
+	srand(time(0));
+	int Minado=0;
+	int Mineral = 1 + (rand() % 15);
+	string MineralS;
+	switch(Mineral){
+		case 1:
+			MineralS = "Hierro";
+			break;
+		default:
+			MineralS = "Piedra";
+			break;
+	}
+	if(Mineral == 1){
+		Minado = 1 + (rand() % 4);
+	}else{
+		Minado = 1 + (rand() % 8);
+	}
+	for(int i=0;i<=20;i++){
+		if(Mineral == 1){
+			if(Inventory[i][0] == 7){
+				Inventory[i][0] = 7;
+				Inventory[i][1]+=Minado;
+				break;
+			}
+			if(Inventory[i][0] == 4){
+				Inventory[i][0] = 7;
+				Inventory[i][1]+=Minado;
+				break;
+			}
+		}else{
+			if(Inventory[i][0] == 6){
+				Inventory[i][0] = 6;
+				Inventory[i][1]+=Minado;
+				break;
+			}
+			if(Inventory[i][0] == 4){
+				Inventory[i][0] = 6;
+				Inventory[i][1]+=Minado;
+				break;
+			}
+		}
+	}
+	system("cls");
+	gotoxy(7,4);
+	cout<<"Minando...";
+	Carga(7,500);
+	gotoxy(7,4);
+	cout<<"                                                                                ";
+	gotoxy(7,4);
+	cout<<"    MINADO!!";
+	gotoxy(7,6);
+	cout<<"Minaste "<<Minado<<" De "<<MineralS<<"!!";
+	getch();
+}
+
+void Curar(int Curacion){
+	system("cls");
+	gotoxy(7,4);
+	cout<<"Te Curaste "<<Curacion<<" de HP";
+	HP+=Curacion;
+	if(HP>HPMax){
+		HP = HPMax;
+		gotoxy(7,5);
+		cout<<"Te curaste en su totalidad";
+	}
+	getch();
+}
+
+void Alimentar(int Alimentacion){
+	system("cls");
+	gotoxy(7,4);
+	cout<<"Comiste y recuperaste "<<Alimentacion<<" de Hambre";
+	Food+=Alimentacion;
+	if(Food>FoodMax){
+		Food = FoodMax;
+		gotoxy(7,5);
+		cout<<"Ya no tienes hambre";
+	}
+	getch();
+}
+
+void Creativo(){
+	system("cls");
+	gotoxy(7,4);
+	cout<<"Ingrese los valores :";
+	gotoxy(7,5);
+	cout<<"Inventario Ubicacion ";
+		int Ubic;
+	cin>>Ubic;
+	Ubic--;
+	gotoxy(7,6);
+	cout<<"Inventario Tipo ";
+		int Type;
+	cin>>Type;
+	gotoxy(7,7);
+	cout<<"Inventario Cantidad ";
+		int Quantity;
+	cin>>Quantity;
+	Inventory[Ubic][0] = Type;
+	Inventory[Ubic][1] = Quantity;
+	DeclararInventario();
+}
+
+void DisminuirItem(int Ubic,int Cantidad){
+	Inventory[Ubic][1] -= Cantidad;
+	if(Inventory[Ubic][1]<=0){
+		Inventory[Ubic][0] = 4;
+		Inventory[Ubic][1] = 0;
+	}
+}
+void Inventario(){
+	system("cls");
+	int optn;
+	MostrarInventario();
+	cout<<"\n\n";
+	cout<<"Cual Objeto desea Usar : ";
+	cin>>optn;
+	optn--;
+	system("cls");
+	gotoxy(7,4);
+	switch(Inventory[optn][0]){
+		case 0:
+			cout<<"Usaste "<<InventoryNames[optn];
+			DisminuirItem(optn,1);
+			getch();
+			break;
+		case 1:
+			cout<<"Comiste el "<<InventoryNames[optn];
+			getch();
+			srand(time(0));
+			Alimentar(1+(rand()%20));
+			DisminuirItem(optn,1);
+			break;
+		case 2:
+			cout<<"Talaste y Minaste con "<<InventoryNames[optn];
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			gotoxy(7,4);
+			cout<<"                                  ";
+			gotoxy(7,4);
+			cout<<"Pero Fallo";
+			DisminuirItem(optn,1);
+			break;
+		case 3:
+			cout<<"Te curaste con "<<InventoryNames[optn];
+			getch();
+			srand(time(0));
+			Curar(1+(rand()%20));
+			DisminuirItem(optn,1);
+			break;
+		case 4:
+			cout<<"Usaste el "<<InventoryNames[optn];
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			gotoxy(7,4);
+			cout<<"                                  ";
+			gotoxy(7,4);
+			cout<<"Empiesas a creer que tienes Retraso";
+			DisminuirItem(optn,1);
+			break;
+		default:
+			cout<<"Usaste "<<InventoryNames[optn];
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			cout<<".";
+			Sleep(750);
+			gotoxy(7,4);
+			cout<<"                                  ";
+			gotoxy(7,4);
+			cout<<"Pero fue Inutil";
+			getch();
+			getch();
+	}
+	getch();
+	return;
+}

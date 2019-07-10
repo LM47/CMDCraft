@@ -1,0 +1,73 @@
+/********************************
+			EL MENU
+*********************************/
+
+void MENU(){
+	if(HP<=0){
+		system("cls");
+		cout<<"GAME OVER";
+		getch();
+		exit(0);
+	}
+	system("cls");
+	int optn;
+	gotoxy(12,13);
+	for(int i=0;i<HP;i++){	
+		printf("%c",CHARA_TRUE);
+	}
+	gotoxy(12,14);
+	cout<<"HP "<<HP<<" / "<<HPMax<<"     Hambre "<<Food<<" / "<<FoodMax<<endl;
+	gotoxy(15,4);
+	cout<<"[1] Ver Inventario.";
+	gotoxy(15,5);
+	cout<<"[2] Usar Objeto.";
+	gotoxy(15,6);
+	cout<<"[3] Talar.";
+	gotoxy(15,7);
+	cout<<"[4] Minar.";
+	gotoxy(15,8);
+	cout<<"[TAB] Creativo";
+	gotoxy(15,9);
+	cout<<"[ESC] Salir.";
+	gotoxy(15,10);
+	cout<<"Opcion: ";
+	optn = getch();
+	Restart:
+	switch(optn){
+		case '1':
+			DeclararInventario();
+			MostrarInventario();
+			break;
+		case '2':
+			Inventario();
+			break;
+		case '3':
+			Talar();
+			break;
+		case '4':
+			Minar();
+			break;
+		case TAB:
+			Creativo();
+			break;
+		case 'q':
+			HP--;
+			break;
+		case 'e':
+			Food--;
+			break;
+		case EXIT:
+			exit(0);
+			break;
+/*		case 'q':
+			HP--;
+			break;
+		case 'e':
+			Food--;
+			break;
+*/		default:
+			MENU();
+			break;
+	}
+}
+
